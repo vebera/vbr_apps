@@ -21,9 +21,6 @@ sudo apt update && sudo apt install -y net-tools bridge-utils mc tmux htop
 Must be spinned first!
 
 
-## Portainer Agent
-Spin if you have a master Portainer app installed elsewhere
-
 ## Change location for docker:
 ```bash
 sudo nano /etc/docker/daemon.json
@@ -36,23 +33,5 @@ Paste the text:
 ```
 save and reboot:
 ```bash
-sudo reboot
-```
-## Troubleshooting
-### If containers do not get internet access
-1. Follow [this solution](https://forums.docker.com/t/solved-no-network-when-running-a-container-in-arch-linux/5494/6)
-NOTE: connman can interfere and modify ip route tables!
-```
-sudo apt update && sudo apt install -y connman
-sudo nano /etc/connman/main.conf
-```
-2. add this line
-```
-[General]
-NetworkInterfaceBlacklist=vmnet,vboxnet,virbr,ifb,docker,veth,eth,wlan
-```
-
-3. Save and reboot
-```
 sudo reboot
 ```
