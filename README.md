@@ -15,23 +15,3 @@ Prerequisites:
 ```
 sudo apt update && sudo apt install -y net-tools bridge-utils mc tmux htop
 ```
-
-
-## Traefik & Letsencrypt
-Must be spinned first!
-
-
-## Change location for docker:
-```bash
-sudo nano /etc/docker/daemon.json
-```
-Paste the text:
-```
-{
-  "data-root": "/mnt/disk/docker"
-}
-```
-save and reboot:
-```bash
-sudo reboot
-```
