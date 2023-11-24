@@ -1,0 +1,50 @@
+## which docker-compose file to take:
+COMPOSE_FILE=docker-compose.yml
+
+## docker-compose stack name:
+COMPOSE_PROJECT_NAME=staging
+
+# Docker
+# ------
+
+## container name
+CONTAINER_NAME=mongodb
+
+## External backup folder
+EXT_BACKUP=./backup
+
+## Internal backup folder
+INT_BACKUP=/data/backup
+
+
+# MongoDB
+# -------
+
+## Mongo image version
+MONGO_IMAGE=mongo:5.0
+
+MONGO_DB_USER=dbadminname
+
+MONGO_DB_PASSWORD=dbpassword
+
+
+# Mongo Express
+# -------------
+
+## Docker image name:
+EXPRESS_IMAGE=mongo-express
+
+## Container name
+EXPRESS_NAME=dbadmin
+
+## Express app URL
+EXPRESS_URL=#EXPRESS_URL#
+
+## Express app port:
+EXPRESS_PORT=8081
+
+## Basic auth:
+EXPRESS_USER=#EXPRESS_USER#
+
+## Basic auth
+EXPRESS_PASS=#EXPRESS_PASS#

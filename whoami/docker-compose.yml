@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  whoami:
+    image: "traefik/whoami"
+    container_name: "whoami"
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+      - .:/./home

@@ -1,0 +1,15 @@
+## which docker-compose file to take:
+COMPOSE_FILE=docker-compose-local.yml
+
+## docker-compose stack name:
+COMPOSE_PROJECT_NAME=local
+
+## Name of container:
+CONTAINER_NAME=mailpit
+
+## Docker image name:
+IMAGE_NAME=axllent/mailpit:latest
+
+## Ports:
+MAILPIT_SMTP_PORT=1025
+MAILPIT_WEB_PORT=8025

@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  mailpit:
+    image: ${IMAGE_NAME:-'axllent/mailpit:latest'}
+    container_name: ${CONTAINER_NAME:-mailpit}
+    restart: always
+    networks:
+      - internal
+      - proxy
+    expose:
+      - '${MAILPIT_SMTP_PORT:-1025}:1025'
+      - '${MAILPIT_WEB_PORT:-8025}:8025' 
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy
+      traefik.http.routers.mailpit.entrypoints: websecure
+      traefik.http.routers.mailpit.rule: Host(`${MAILPIT_URL}`)
+      traefik.http.routers.mailpit.tls.certresolver: letsencrypt
+      traefik.http.services.mailpit.loadbalancer.server.port: 8025
+      traefik.http.routers.mailpit.middlewares: mailpit-auth
+      traefik.http.middlewares.mailpit-auth.basicauth.users: ${AUTH_USER}:${AUTH_PASS}
+
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false

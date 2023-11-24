@@ -1,0 +1,26 @@
+## which docker-compose file to take:
+COMPOSE_FILE=docker-compose.yml
+### COMPOSE_FILE=docker-compose-ssl.yml
+
+#GENERAL INFO
+COMPOSE_PROJECT_NAME=fl-apps
+
+ACME_EMAIL=vasyl@freelan.co
+DASHBOARD_TRAEFIK_URL=dash.freelan.co
+LOG_LEVEL=INFO
+#LOG_LEVEL=DEBUG
+
+
+TRAEFIK_API_INSECURE=true
+TRAEFIK_API_DEBUG=true
+
+# Security
+#AUTH_USER=<admin>
+#AUTH_PASS=<admin pass>
+# traefik pilot token:
+PILOT_TOKEN=
+
+
+# SSL certificate
+## Location of the certificates on the host server (.crt, .key)
+CERT_HOST=/home/ubuntu/ssl-cert

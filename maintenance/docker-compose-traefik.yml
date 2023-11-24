@@ -1,0 +1,21 @@
+# Traefik-dependant version with Letsencrypt certs
+version: '3.9'
+services:
+  static-site:
+    image: ${IMAGE}
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    volumes:
+      - ./site:/usr/local/apache2/htdocs/
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.static-site.rule=Host(`${ROOT_URL}`)"  # Use the ROOT_URL environment variable
+      - "traefik.http.routers.static-site.entrypoints=websecure"
+      - "traefik.http.routers.static-site.tls.certresolver=letsencrypt"  # Replace with your certresolver
+      - "traefik.http.services.static-site.loadbalancer.server.port=80"
+    environment:
+      - TZ=${TZ}
+      
+networks:
+  default:
+    name: proxy  # This should be the name of the network your Traefik container is attached to

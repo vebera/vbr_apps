@@ -1,0 +1,26 @@
+## which docker-compose file to take:
+COMPOSE_FILE=docker-compose-traefik.yml
+
+## docker-compose stack name:
+COMPOSE_PROJECT_NAME=fl-apps
+
+## Name of container:
+CONTAINER_NAME=mailpit
+
+## Docker image name:
+IMAGE_NAME=axllent/mailpit:latest
+
+## Ports:
+MAILPIT_SMTP_PORT=1025
+MAILPIT_WEB_PORT=8025
+
+## Mailpit webconsole:
+MAILPIT_URL=
+
+# Basic authentication to protect a dashboard page
+## Example: executed bash command `htpasswd -nb username password`
+## outputs a line `username:$apr1$yc1ztBYo$DCOHy1EnzPhXTTd.cJ.5T1`
+## AUTH_USER=username
+## AUTH_PASS=$apr1$yc1ztBYo$DCOHy1EnzPhXTTd.cJ.5T1
+AUTH_USER=
+AUTH_PASS=

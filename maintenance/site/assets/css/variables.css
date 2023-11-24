@@ -1,0 +1,8 @@
+:root {
+  /* Colors */
+  --c-red-hue: 0;
+
+  --c-third: hsl(calc(var(--c-red-hue) + 39.3), 36.6%, 44.2%);
+  --c-orange: #efb400;
+  --c-red: #e9453c;
+}

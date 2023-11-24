@@ -1,0 +1,150 @@
+version: "3.7"
+
+x-networks: &networks
+  networks:
+    - proxy
+    - default
+
+services:
+
+  traefik:
+    image: ${TRAEFIK_IMAGE}
+    container_name: traefik
+    <<: *networks
+    restart: always
+    environment:
+      TZ: $TZ
+    security_opt:
+      - no-new-privileges:true
+    command:
+      # Enable the access log, with HTTP requests:
+      - --accesslog
+      # Enable the Traefik log, for configurations and errors:
+      - --log
+      - --log.level=${LOG_LEVEL}
+      # Enable the Dashboard and API:
+      - --api
+      - --api.dashboard
+      - --api.insecure=${TRAEFIK_API_INSECURE:-false}
+      - --api.debug=${TRAEFIK_API_DEBUG:-false}
+      # Enable Docker in Traefik, so that it reads labels from Docker services:
+      - --providers.docker=true
+      # Do not expose all Docker services, only the ones explicitly exposed:
+      - --providers.docker.exposedbydefault=false
+
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
+#      - --certificatesresolvers.letsencrypt.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./.auth:/.auth:ro
+      - ./letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      # Enable Traefik for this service, to make it available in the public network:
+      traefik.enable: true
+
+      # Routers 
+#      traefik.http.routers.traefik.rule: Host(`${PORTAINER_TRAEFIK_URL}`)
+      traefik.http.routers.traefik.rule: Host(`${DASHBOARD_TRAEFIK_URL}`)
+      traefik.http.routers.traefik.entrypoints: websecure
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.tls.certresolver: letsencrypt
+      traefik.http.routers.traefik.middlewares: traefik-auth
+
+      # Global redirect to HTTPS:
+      traefik.http.routers.http-catchall.rule: hostregexp(`{host:.+}`)
+      traefik.http.routers.http-catchall.entrypoints: web
+      traefik.http.routers.http-catchall.middlewares: redirect-to-https
+
+      # Middleware Redirect:
+      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
+
+      # Protecting the dashboard with basicauth:
+      traefik.http.middlewares.traefik-auth.basicauth.usersfile: /.auth/users.txt
+
+  portainer:
+    image: ${PORTAINER_IMAGE}
+    container_name: portainer
+    <<: *networks
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+      - ./.secrets/portainer-admin-password:/run/secrets/portainer
+    environment:
+      AGENT_SECRET: ${PORTAINER_AGENT_SECRET}
+      TZ: $TZ
+    labels:
+      traefik.enable: true
+      traefik.http.routers.myresolver.rule: Host(`${PORTAINER_TRAEFIK_URL}`)
+      traefik.http.routers.myresolver.entrypoints: websecure
+      traefik.http.routers.myresolver.tls.certresolver: letsencrypt
+      traefik.http.routers.myresolver.service: portainer_svc
+      traefik.http.services.portainer_svc.loadBalancer.server.port: 9000
+
+  vault-server:
+    image: vault:latest
+    container_name: vault-server
+    restart: always
+    <<: *networks
+    volumes:
+      - vault-data:/vault/file/
+     # comment this line during initialisation so the vault will read environment config:
+      - ./vault-init/config.hcl:/vault/config/config.hcl
+    environment:
+      VAULT_ADDR: "http://${VAULT_TRAEFIK_URL}"
+      VAULT_API_ADDR: "http://${VAULT_TRAEFIK_URL}"
+      VAULT_LOCAL_CONFIG: '{"backend": {"file": {"path": "/vault/file"}}, "default_lease_ttl": "168h", "max_lease_ttl": "720h"}'
+      VAULT_SUPPLEMENTAL_CONFIG: '{"ui":true, "listener": {"tcp":{"address": "0.0.0.0:8200", "tls_disable": 1}}}'
+    cap_add:
+      - IPC_LOCK
+    # comment it during initialisation so the vault to run in dev mode:
+    command: server
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy
+      traefik.http.routers.vault-server.entrypoints: websecure
+      traefik.http.routers.vault-server.rule: Host(`${VAULT_TRAEFIK_URL}`)
+      traefik.http.routers.vault-server.tls.certresolver: letsencrypt
+      traefik.http.services.vault-server.loadbalancer.server.port: 8200
+    profiles: 
+      - vault
+
+  vault-init:
+    image: vault:latest
+    container_name: vault-init
+    environment:
+      - VAULT_ADDR=http://vault-server:8200
+      - MY_VAULT_TOKEN=${VAULT_DEV_ROOT_TOKEN_ID:-test}
+    volumes:
+      - ./vault-init/vault-init.sh:/usr/local/bin/vault-init.sh
+      - vault-data:/vault/file/
+    command: /usr/local/bin/vault-init.sh
+    restart: on-failure
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      - vault-server
+    profiles: 
+      - init
+
+
+volumes:
+  portainer_data:
+  vault-data:
+
+
+networks:
+  proxy:
+    external: true

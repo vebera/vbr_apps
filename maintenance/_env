@@ -1,0 +1,19 @@
+# GENERAL INFO
+# ------------
+## which docker-compose file to take:
+#COMPOSE_FILE=docker-compose-nginx.yml
+COMPOSE_FILE=docker-compose-traefik.yml
+
+# Time zone
+TZ=Etc/UTC
+
+# Image version (for nginx version)
+#IMAGE=nginx:1.17
+# Image version (for Traefik version)
+IMAGE=httpd:2.4
+
+# Container name
+CONTAINER_NAME=maintenance
+
+# FQDN of the site
+ROOT_URL=freelan.co

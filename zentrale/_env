@@ -1,0 +1,55 @@
+# GENERAL INFO
+# ------------
+## which docker-compose file to take:
+COMPOSE_FILE=docker-compose.yml
+
+## docker-compose stack name:
+COMPOSE_PROJECT_NAME=zentrale
+TZ=Etc/UTC
+
+## Docker image prune fiter (https://docs.docker.com/engine/reference/commandline/image_prune/)
+PRUNE_FILTER="until=24h"
+
+# Traefik & Letsencrypt:
+# ----------------------
+## Traefik image name:
+TRAEFIK_IMAGE=traefik:v2.9.6
+
+## email for LetsEncrypt SSL-certificate registration (admin@domain.tld):
+ACME_EMAIL=admin@#DOMAIN#
+
+## url for traefik dashboard (dash.domain.tld):
+DASHBOARD_TRAEFIK_URL=dash.#DOMAIN#
+
+## Traefik logging level:
+LOG_LEVEL=INFO
+#LOG_LEVEL=DEBUG
+
+## misc:
+TRAEFIK_API_INSECURE=true
+TRAEFIK_API_DEBUG=false
+
+
+## Traefik pilot token to manage all traefik nodes:
+# PILOT_TOKEN=
+
+
+# Portainer:
+# ----------
+## portainer image name:
+PORTAINER_IMAGE=portainer/portainer-ce:2.17.0
+
+## url for portainer dashboard:
+PORTAINER_TRAEFIK_URL=portainer.#DOMAIN#
+
+## portainer agent secret - must be the same for all managed portainer nodes:
+PORTAINER_AGENT_SECRET=#PORTAINER_AGENT_SECRET#
+
+
+# Vault:
+# -----
+## url for vault management console:
+VAULT_TRAEFIK_URL=vault.#DOMAIN#
+
+## Vault development mode security token (show in the vault console):
+VAULT_DEV_ROOT_TOKEN_ID=

@@ -1,0 +1,54 @@
+version: '3.9'
+services:
+  mongodb:
+    image: ${MONGO_IMAGE}
+    container_name: ${CONTAINER_NAME}
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USER}
+#      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+    restart: always
+    networks:
+      - proxy
+      - internal
+    volumes:
+      - mongodb_data:/data/db
+      - ${EXT_BACKUP:-./backup}:${INT_BACKUP:-/data/backup}
+
+  dbadmin:
+    container_name: ${EXPRESS_NAME}
+    image: ${EXPRESS_IMAGE}
+    restart: unless-stopped
+    networks:
+     - proxy
+     - internal
+    volumes:
+      - ./.auth:/.auth:ro
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_DB_USER}
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_DB_PASSWORD}
+      ME_CONFIG_BASICAUTH_USERNAME : ${EXPRESS_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD : ${EXPRESS_PASS}
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy
+      traefik.http.routers.mongoex.entrypoints: websecure
+      traefik.http.routers.mongoex.rule: Host(`${EXPRESS_URL}`)
+      traefik.http.routers.mongoex.tls.certresolver: letsencrypt
+      traefik.http.services.mongoex.loadbalancer.server.port: ${EXPRESS_PORT}
+
+      # Protecting the dashboard with basicauth:
+      traefik.http.middlewares.mongoex.basicauth.usersfile: /.auth/users.txt
+    depends_on:
+      - mongodb
+    profiles: 
+      - express
+
+volumes:
+  mongodb_data:
+
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
