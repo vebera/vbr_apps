@@ -1,0 +1,46 @@
+# Version with dedicated PostgreSQL
+version: '3'
+
+volumes:
+  pgadmin-data:
+  db-data:
+
+networks:
+  proxy:
+    external: true
+
+services:
+  db:
+    image: ${POSTGRES_IMAGE:-postgres:13}
+    container_name: ${POSTGRES_CONTAINER:-db}
+    restart: always
+    environment:
+      TZ: ${TZ}
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-your_db_password}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      FETCH_OCA_DEPENDENCIES: True
+    volumes:
+      - db-data:/var/lib/postgresql/data/pgdata
+    networks:
+      - proxy
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+
+  pgadmin:
+    image: ${PGADMIN_IMAGE:-dpage/pgadmin4:latest}
+    container_name: ${PGADMIN_CONTAINER:-pgadmin}
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@pgadmin.email}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-your_pgadmin_password}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - proxy
+    ports:
+      - ${PGADMIN_WEB_PORT:-80}:80
+    depends_on:
+      - db

@@ -1,0 +1,28 @@
+# Environment variables for the app on Odoo server
+## docker-compose stack name (is automatically set):
+COMPOSE_PROJECT_NAME=vbr_apps
+
+## which docker-compose file to use:
+### COMPOSE_FILE=docker-compose-db.yml
+COMPOSE_FILE=docker-compose.yml
+
+# =======================
+# Server timezone:
+TZ=Asia/Dubai
+
+# =======================
+# Db user and password
+POSTGRES_IMAGE=postgres:13
+POSTGRES_PASSWORD="Dsfdfg5d45FgfhtjkudTXkMI="
+POSTGRES_USER=admin
+POSTGRES_CONTAINER=db
+POSTGRES_PORT=5432
+
+# =======================
+# pgAdmin:
+##
+PGADMIN_CONTAINER=pga
+PGADMIN_IMAGE=dpage/pgadmin4:latest
+PGADMIN_EMAIL=admin@pgadmin.email
+PGADMIN_PASSWORD=3224$#V68fe33
+PGADMIN_WEB_PORT=8056

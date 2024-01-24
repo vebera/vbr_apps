@@ -8,6 +8,8 @@
 * uptime-kuma (service uptime monitor)
 * whoami (info container by Traefik)
 * zentrale (hashiCorp Vault + Portainer + Traefik)
+* pgadmin (Postgres IDE app)
+* directus (**in progress**)
 
 Prerequisites:
 - [Docker Engine](https://docs.docker.com/install/linux/docker-ce/ubuntu/)

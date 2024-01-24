@@ -1,0 +1,25 @@
+# Version with dedicated PostgreSQL
+version: '3'
+
+volumes:
+  pgadmin-data:
+
+networks:
+  proxy:
+    external: true
+
+services:
+  pgadmin:
+    image: ${PGADMIN_IMAGE:-dpage/pgadmin4:latest}
+    container_name: ${PGADMIN_CONTAINER:-pgadmin}
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@pgadmin.email}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-your_pgadmin_password}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - proxy
+    ports:
+      - ${PGADMIN_WEB_PORT:-80}:80
