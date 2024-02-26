@@ -1,0 +1,23 @@
+## which docker-compose file to take:
+COMPOSE_FILE=docker-compose.yml
+
+## docker-compose stack name:
+COMPOSE_PROJECT_NAME=staging
+
+## PostgreSQL
+POSTGRES_USER="postgres"
+POSTGRES_PASSWORD="eLX5cVInWgD"
+POSTGRES_SERVER="postgresdb" 
+POSTGRES_INNER_PORT="5432"
+POSTGRES_DB="postgres"
+POSTGRES_OUTER_PORT="5432"
+PG_IMAGE="postgres:latest"
+PG_CONTAINER="postgres"
+
+## pgAdmin
+PGADMIN_DEFAULT_EMAIL="pgadmin4@pgadmin.org"
+PGADMIN_DEFAULT_PASSWORD="nzyjJ6TCNgXqx"
+PGADMIN_LISTEN_PORT=80
+PGADMIN_OUTER_PORT=5050
+PGADMIN_IMAGE="dpage/pgadmin4"
+PGADMIN_CONTAINER="pgadmin4"

@@ -1,0 +1,39 @@
+services:
+  db:
+    container_name: ${PG_CONTAINER:-postgres}
+    image: ${PG_IMAGE:-postgres:latest}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    ports:
+      - "${POSTGRES_OUTER_PORT:-54321}:${POSTGRES_INNER_PORT:-5432}"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - proxy
+
+  pgadmin:
+    container_name: ${PGADMIN_CONTAINER:-pgadmin4}
+    image: ${PGADMIN_IMAGE:-dpage/pgadmin4}
+    restart: always
+    ports:
+      - "${PGADMIN_OUTER_PORT:-5050}:80"
+    volumes:
+     - pgadmin-data:/var/lib/pgadmin
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - proxy
+
+volumes:
+  pgadmin-data:
+  db-data:
+
+networks:
+  proxy:
+    external: true
