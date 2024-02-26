@@ -40,15 +40,6 @@ main() {
         --build | -b )
             docker-compose --env-file ${env} -f ${COMPOSE_FILE} up -d --build "${@:3}"
             ;;
-        --migrate | -m )
-            docker-compose down api
-            # docker-compose --env-file ${env} -f ${COMPOSE_FILE} run fastapi_server alembic revision --autogenerate -m "new db changes"
-            docker-compose --env-file ${env} -f ${COMPOSE_FILE} run api alembic upgrade head
-            ;;
-        --test | -t )
-            docker-compose --env-file ${env} -f ${COMPOSE_FILE} down
-            docker-compose --env-file ${env} -f ${COMPOSE_FILE} run fastapi_server pytest .
-            ;;
         --restart | -r )
             docker-compose --env-file ${env} -f ${COMPOSE_FILE} down
             docker-compose --env-file ${env} -f ${COMPOSE_FILE} up -d "${@:3}"
@@ -59,17 +50,12 @@ main() {
                     ${GRN}--pull, -p${NC}\t\t Pull the repo from registry\n \
                     ${GRN}--up,-u${NC}\t\t Up the repo\n \
                     ${GRN}--build,-b${NC}\t\t Build the repo\n \
-                    ${GRN}--migrate,-m${NC}\t\t Migrate changes\n \
-                    ${GRN}--test,-t${NC}\t\t Test the repo\n \
                     ${GRN}--down,-d${NC}\t\t Down the repo\n \
                     ${GRN}--restart,-r${NC}\t Cold-restart\n \
                     \n \
                     Example:${BLU} ${0} ${GRN}-u${NC}\n \
                     \n \
                     ${GRN}pgAdmin:${NC}\t http://localhost:${PGADMIN_OUTER_PORT:-5050}/login \n \
-                    ${GRN}Swagger:${NC}\t http://127.0.0.1:${API_OUTER_PORT:-8000}/docs \n \
-                    ${GRN}Redoc:${NC}\t http://127.0.0.1:${API_OUTER_PORT:-8000}/redoc \n \
-                    ${GRN}API:${NC}\t http://127.0.0.1:${API_OUTER_PORT:-8000} \n \
                     \n \
                     "
             ;;
