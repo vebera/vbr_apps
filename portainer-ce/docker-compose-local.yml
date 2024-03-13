@@ -1,0 +1,31 @@
+version: "3.7"
+
+x-networks: &networks
+  networks:
+    - proxy
+    - default
+
+services:
+
+  portainer:
+    image: ${PORTAINER_IMAGE}
+    container_name: ${PORT_CONTAINER_NAME:-portainer}
+    <<: *networks
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - ${PORTAINER_OUTER_PORT:-9000}:9000
+    environment:
+      TZ: $TZ
+
+volumes:
+  portainer_data:
+
+networks:
+  proxy:
+    external: true
