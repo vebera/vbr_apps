@@ -1,0 +1,14 @@
+#https://github.com/NiNiyas/tailon?tab=readme-ov-file
+version: "3.9"
+services:
+  tailon:
+    container_name: Tailon
+    image: ghcr.io/niniyas/tailon:beta
+    ports:
+      - 8082:8080
+    volumes:
+      - /var/log/syslog:/syslog
+      - /var/log/log1:/log1
+      - ./config:/config  # If you need to load from config file, put your config.toml in this folder.
+    command: -b :8080 "group=Syslog,alias=syslog,/syslog" "group=group1,/log1/*.log"
+    command: -c /config/config.toml # If you need to load from config file
