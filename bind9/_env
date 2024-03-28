@@ -1,0 +1,6 @@
+# GENERAL INFO
+# ------------
+## docker-compose stack name:
+COMPOSE_PROJECT_NAME=dns
+
+TZ=Etc/UTC

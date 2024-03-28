@@ -1,0 +1,32 @@
+$TTL 2d
+$ORIGIN local.lab.
+
+@           IN      SOA     ns1.local.lab admin.local.lab (
+                                20230218		; serial number
+		                        3600			; refresh period
+		                        600			    ; retry period
+		                        604800			; expire time
+		                        1800 			; negative TTL
+                                )
+@           IN      NS      ns1.local.lab.
+
+ns1		    IN      A	    172.22.0.11
+
+; Main VLAN network services
+router		IN		A		172.22.0.1
+portainer   IN      A       172.22.0.51
+directus	IN      A       172.22.0.52
+dozzle		IN		A		172.22.0.53
+heimdall	IN		A		172.22.0.54
+mailpit		IN		A		172.22.0.55
+maintenance	IN		A		172.22.0.56
+mongodb		IN		A		172.22.0.57
+pgadmin		IN		A		172.22.0.58
+postgres	IN		A		172.22.0.59
+squidex		IN		A		172.22.0.60
+tailon		IN		A		172.22.0.61
+traefik		IN		A		172.22.0.62
+uptime		IN		A		172.22.0.63
+watchtower	IN		A		172.22.0.64
+whoami		IN		A		172.22.0.65
+zentrale	IN		A		172.22.0.66
