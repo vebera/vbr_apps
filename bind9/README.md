@@ -1,15 +1,9 @@
 ## How to install
 
-### Create networks
+### Create a network
 
 ```bash
 docker network create --driver=bridge --subnet=172.22.0.0/16 --gateway=172.22.0.1 dns_local
-```
-
-and
-
-```bash
-docker network create --driver bridge isolated
 ```
 
 ### Spin the container
