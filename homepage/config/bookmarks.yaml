@@ -1,0 +1,18 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/bookmarks
+
+- Developer:
+    - ChatGPT:
+        - abbr: AI
+          href: https://chat.openai.com/
+
+- Social:
+    - LinkedIn:
+        - abbr: LI
+          href: https://linkedin.com/
+
+- E-mail:
+    - Microsoft365:
+        - abbr: MS
+          href: https://www.office.com/?auth=2

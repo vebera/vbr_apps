@@ -15,6 +15,7 @@
 * directus (**in progress**)
 * watchtower (automating Docker container base image updates) (**in progress**)
 * bind9 (DNS server with all the above apps already assigned own subdomains)
+* authentik (a single platform for user identity needs) (**in progress**)
 
 Prerequisites:
 - [Docker Engine](https://docs.docker.com/install/linux/docker-ce/ubuntu/)

@@ -12,6 +12,7 @@ services:
       - "53:53/udp"
     networks:
       - dns_local
+    dns: 127.0.0.1
     volumes:
       - ./config:/etc/bind
       - ./cache:/var/cache/bind

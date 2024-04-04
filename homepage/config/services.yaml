@@ -1,0 +1,51 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/services
+
+- Business applications:
+    - Odoo:
+        icon: odoo.png
+        href: http://localhost:8080/web?db=home
+        # port: 8080
+        description: Odoo ("home" database)
+        server: local-docker
+        container: odoo_17
+    - Squidex:
+        icon: squidex.png
+        href: http://localhost:80/
+        description: Squidex headless CMS
+        server: local-docker
+        container: squidex_app
+
+- Debug applications:
+    - Mailpit:
+        icon: http://localhost:8025/mailpit.svg
+        href: http://localhost:8025/
+        description: E-mail interception app
+
+- Administration:
+    - Portainer:
+        icon: portainer.png
+        href: http://localhost:9001/
+        description: Container Management IDE
+        server: local-docker
+        container: portainer
+        showStats: true
+    - pgAdmin:
+        icon: pgadmin.png
+        href: http://localhost:8056/
+        description: Postgres IDE app
+        server: local-docker
+        container: pgadmin
+    - Dozzle:
+        icon: dozzle.png
+        href: http://localhost:8090/
+        description: light-weight containers' log viewer
+        server: local-docker
+        container: dozzle
+    - Tailon:
+        icon: mdi-application
+        href: http://localhost:8082/
+        description: viewer of host-based log files
+        server: local-docker
+        container: tailon

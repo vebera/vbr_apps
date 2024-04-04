@@ -3,7 +3,7 @@
 ### Create a network
 
 ```bash
-docker network create --driver=bridge --subnet=172.22.0.0/16 --gateway=172.22.0.1 dns_local
+    docker network create --driver=bridge --subnet=172.22.0.0/16 --gateway=172.22.0.1 dns_local
 ```
 
 ### Spin the container

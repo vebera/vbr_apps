@@ -2,7 +2,7 @@
 version: "3.9"
 services:
   tailon:
-    container_name: Tailon
+    container_name: tailon
     image: ghcr.io/niniyas/tailon:beta
     ports:
       - 8082:8080

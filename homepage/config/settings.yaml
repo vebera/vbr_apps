@@ -1,0 +1,53 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/settings
+
+# You can customize the title of the page if you'd like.
+title: VBR Applications Homepage
+
+# You can customize the start_url as required for installable apps. The default is "/".
+# startUrl: https://custom.url
+
+# You can specify filters to apply over your background image for blur, saturation and brightness as well as opacity to blend with the background color. The first three filter settings use tailwind CSS classes, see notes below regarding the options for each. You do not need to specify all options.
+# background: /images/bg.jpg
+background:
+  image: https://images.unsplash.com/photo-1703635531451-2e32420b164d?q=80&w=1856&auto=format&fit=crop
+  blur: xl # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
+  saturate: 10 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+  brightness: 10 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+  opacity: 40 # 0-100
+
+# You can apply a blur filter to the service & bookmark cards. Note this option is incompatible with the background blur, saturate and brightness filters.
+cardBlur: sm # sm, "", md, etc... see https://tailwindcss.com/docs/backdrop-blur
+
+# If you'd like to use a custom favicon instead of the included one, you may provide a full URL to an image of your choice.
+favicon: https://www.google.com/favicon.ico
+
+theme: dark # or light
+
+# Supported colors are: slate, gray, zinc, neutral, stone, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose, red, white
+color: slate
+
+layout:
+  Test:
+    icon: mdi-test-tube
+  Business applications:
+    icon: mdi-domain
+    # icon: https://cdn-icons-png.flaticon.com/512/252/252035.png
+    # header: false
+    # style: row
+    # columns: 5
+  Debug applications:
+    icon: mdi-bug-check
+  Administration:
+    icon: mdi-shield-crown
+
+# providers:
+#   openweathermap: openweathermapapikey
+#   weatherapi: weatherapiapikey
+
+# Icons are here:
+# https://github.com/walkxcode/dashboard-icons
+# with `si-` prefix: https://simpleicons.org/
+# with `mdi-` prefix: https://pictogrammers.com/library/mdi/
+# You can specify a custom color by adding a hex color code as suffix e.g. mdi-XX-#f0d453 or si-XX-#a712a2 
