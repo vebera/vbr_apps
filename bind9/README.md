@@ -12,6 +12,13 @@
 docker compose up -d
 ```
 
+When getting an error: 'Error starting userland proxy: listen tcp 0.0.0.0:53: bind: address already in use', run the following commands:
+```bash
+sudo systemctl stop systemd-resolved
+sudo systemctl disable systemd-resolved
+```
+and spin the docker compose again.
+
 ### point local DNS resolver to 172.22.0.1
 
 ## Test
