@@ -12,7 +12,7 @@ TZ=Asia/Dubai
 
 # =======================
 # Db user and password
-POSTGRES_IMAGE=postgres:13
+POSTGRES_IMAGE=postgres:16.1-alpine
 POSTGRES_PASSWORD="Dsfdfg5d45FgfhtjkudTXkMI="
 POSTGRES_USER=admin
 POSTGRES_CONTAINER=db
