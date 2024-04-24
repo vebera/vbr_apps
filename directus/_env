@@ -1,0 +1,37 @@
+## docker-compose stack name (is automatically set):
+COMPOSE_PROJECT_NAME=#COMPOSE_PROJECT_NAME#
+
+## which docker-compose file to use:
+### COMPOSE_FILE=docker-compose-db.yml
+COMPOSE_FILE=docker-compose.yml
+
+# =======================
+# Server timezone:
+TZ=Asia/Dubai
+
+# =======================
+# Db user and password
+DB_CLIENT=pg
+DB_PASSWORD=
+DB_HOST=db
+DB_USER=
+DB_PORT=5432
+## database name:
+DB_DATABASE=
+
+# =======================
+# Directus:
+##
+DIRECTUS_KEY=#DIRECTUS_KEY#
+DIRECTUS_SECRET=#DIRECTUS_SECRET#
+DIRECTUS_ADMIN_EMAIL=admin@example.com
+DIRECTUS_ADMIN_PASSWORD=#DIRECTUS_ADMIN_PASSWORD#
+
+## port:
+DIRECTUS_PORT=8055
+
+## path to localhost uploads folder
+HOST_UPLOADS=uploads
+
+## path to container's local uploads folder
+STORAGE_LOCAL_ROOT=/directus/uploads
