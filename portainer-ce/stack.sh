@@ -25,19 +25,14 @@ init() {
     exit 1
   fi
 
-  if [[ ! -x "$(command -v docker-compose)" ]]; then
-    printf "\ninit(): You must install ${RED}docker-compose${NC} on your machine. Aborted. \n"
-    exit 1
-  fi
-
   createnet
 
-  # copying _env into the .env if not found:
+  # copying .env.sample into the .env if not found:
   if [ ! -r ${env} ]
   then
     printf "\ninit(): Environment file is not found.\n"
     printf "init(): Creating (${YEL}${env}${NC}). \n"
-    cp '_env' ${env}
+    cp '.env.sample' ${env}
     printf "\ninit(): Check the ${YEL}${env}${NC} and make sure all parameters are correct and subdomains are registered in your DNS settings. \n"
   fi
 
@@ -59,17 +54,17 @@ main() {
 
     case "${1}" in
         --pull | -p )
-            docker-compose pull
+            docker compose pull
             ;;
         --up | -u )
-            docker-compose up -d "${@:2}"
+            docker compose up -d "${@:2}"
             ;;
         --down | -d )
-            docker-compose down
+            docker compose down
             ;;
         --restart | -r )
-            docker-compose down
-            docker-compose up -d "${@:2}"
+            docker compose down
+            docker compose up -d "${@:2}"
             ;;
         * ) 
             printf "\n \
